@@ -1,0 +1,47 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-view1">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+      .logo-box {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+
+        height: 100%;
+        width: 100%;
+      }
+
+    </style>
+    <div class="logo-box">
+
+      <iron-image id="initial" src="/images/jwf-initial-2.svg" style="width: 50vw; height: 50vh;" sizing="contain"></iron-image>
+
+    </div>
+
+  </template>
+
+
+  <script>
+    Polymer({
+      is: 'my-view1',
+    });
+  </script>
+</dom-module>
