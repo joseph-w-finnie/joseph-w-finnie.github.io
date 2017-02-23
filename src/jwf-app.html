@@ -1,11 +1,6 @@
 <!--
 @license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+Copyright (c) 2017 Webfarer
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
@@ -22,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="my-icons.html">
 
-<dom-module id="my-app">
+<dom-module id="jwf-app">
   <template>
     <style>
       :host {
@@ -89,8 +84,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-drawer id="drawer">
         <app-toolbar>joseph w. finnie</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="/view1">Home</a>
-          <a name="view2" href="/view2">Art</a>
+          <a name="home" href="/home">Home</a>
+          <a name="art" href="/art">Art</a>
         </iron-selector>
       </app-drawer>
 
@@ -107,12 +102,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-pages
             selected="[[page]]"
             attr-for-selected="name"
-            fallback-selection="view404"
+            fallback-selection="lost"
             role="main">
-          <my-view1 name="view1"></my-view1>
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
-          <my-view404 name="view404"></my-view404>
+          <jwf-home name="home"></jwf-home>
+          <jwf-art name="art"></jwf-art>
+          <jwf-lost name="lost"></jwf-lost>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
@@ -120,7 +114,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     Polymer({
-      is: 'my-app',
+      is: 'jwf-app',
 
       properties: {
         page: {
@@ -135,21 +129,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _routePageChanged: function(page) {
-        this.page = page || 'view1';
+        this.page = page || 'home';
 
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
         }
+
       },
 
       _pageChanged: function(page) {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+        var resolvedPageUrl = this.resolveUrl('jwf-' + page + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
       },
 
       _showPage404: function() {
-        this.page = 'view404';
+        this.page = 'lost';
       },
     });
   </script>
