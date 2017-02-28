@@ -1,31 +1,89 @@
-<!--
-@license
-Copyright (c) 2017 Webfarer
--->
+<!-- @license : Copyright (c) 2017 Webfarer -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href"../bower_components/iron-image/iron-image.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="jwf-art">
   <template>
     <style include="shared-styles">
+
       :host {
         display: block;
-
         padding: 10px;
       }
+
     </style>
 
-    <div class="card">
-      <h1>Coming Soon ... </h1>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.</p>
-      <p>Id nam odio natum malorum, tibique copiosae expetenda mel ea.Detracto suavitate repudiandae no eum. Id adhuc minim soluta nam.Id nam odio natum malorum, tibique copiosae expetenda mel ea.</p>
-    </div>
+    <template is="dom-repeat" items="{{artworks}}">
+
+      <iron-image style="width:100%; height:400px;" src="[[item.src]]" sizing="contain"></iron-image>
+
+    </template>
+
   </template>
 
   <script>
     Polymer({
       is: 'jwf-art',
+
+      properties:{
+
+        artworks: {
+          type: Array,
+          value: function(){
+            return [];
+          }
+        },
+
+        metadata: {
+          type: Object,
+          value: function(){
+            return {};
+          }
+        }
+
+      },
+
+      /**
+      * Element is ready in the DOM.
+      */
+      ready: function() {
+        /**
+        * Load artworks configuration data - denoting which images to display.
+        */
+        this._getArtworks({
+          url: '/src/artworks-config.json',
+
+          onLoad: function(e) {
+            console.log("[jwf-art] Successfully loaded artwork configuration.");
+            var payload = JSON.parse(e.target.responseText);
+            console.log("[jwf-art] Artwork configuration: " + JSON.stringify(payload));
+            this.set('metadata', payload.meta);
+            this.set('artworks', payload.artworks);
+          },
+
+          onError:  function(e) {
+            console.log('[jwf-art] ERROR: Could not load artworks configuration');
+          }
+        });
+      },
+
+      /**
+      * Retrieve a configuration file.
+      */
+      _getArtworks: function(request) {
+
+        // Configure request
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', request.onLoad.bind(this));
+        xhr.addEventListener('error', request.onError.bind(this));
+
+        // Make request
+        xhr.open('GET', request.url);
+        xhr.send();
+      }
+
     });
   </script>
 </dom-module>

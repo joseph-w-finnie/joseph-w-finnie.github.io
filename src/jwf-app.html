@@ -22,14 +22,17 @@ Copyright (c) 2017 Webfarer
     <style>
       :host {
         --app-primary-color: white;
+        --app-menu-icon-color: white;
         --app-secondary-color: black;
+        --app-background-image: url('/images/view_of_delft.gif');
 
         display: block;
       }
 
       app-drawer-layout {
-        background-image: url("/images/view_of_delft.gif");
+        background-image: var(--app-background-image);
         background-size: 100% 100%;
+        background-color: white;
       }
 
       app-header {
@@ -38,7 +41,7 @@ Copyright (c) 2017 Webfarer
       }
 
       app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
+        --paper-icon-button-ink-color: var(--app-menu-icon-color);
       }
 
       app-drawer {
@@ -141,11 +144,29 @@ Copyright (c) 2017 Webfarer
         // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl('jwf-' + page + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
+
+        // Update styles
+        this._updateAppStyles(page);
       },
 
       _showPage404: function() {
         this.page = 'lost';
       },
+
+      _updateAppStyles: function(page) {
+        if(page === 'home') {
+
+          this.customStyle['--app-background-image'] = "url('/images/view_of_delft.gif')";
+          this.customStyle['--app-menu-icon-color'] = "white";
+
+        }else if(page === 'art') {
+
+          this.customStyle['--app-background-image'] = "none";
+          this.customStyle['--app-menu-icon-color'] = "black";
+
+        }
+        this.updateStyles();
+      }
     });
   </script>
 </dom-module>
