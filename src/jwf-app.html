@@ -74,7 +74,8 @@ Copyright (c) 2017 Webfarer
       }
       
       #construction {
-        color: #ffb83c
+        color: lightgray;
+        font-weight: bold;
       }
     </style>
 
@@ -90,7 +91,7 @@ Copyright (c) 2017 Webfarer
       <app-drawer id="drawer">
         <app-toolbar>joseph w. finnie</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <span id="construction">Site Under Construction</span>
+          <a name="construction" href="/" id="construction">Site Under Construction</a>
           <a name="home" href="/home">Home</a>
           <a name="art" href="/art">Art</a>
         </iron-selector>
